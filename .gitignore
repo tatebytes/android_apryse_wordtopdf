@@ -1,0 +1,22 @@
+# Built application files
+*.apk
+*.ap_
+# Files for the Gradle build system
+.gradle/
+build/
+# Local configuration files
+local.properties
+# Android Studio generated files
+/.idea
+/.gradle
+/captures
+# Generated and downloaded files
+build/
+captures/
+.externalNativeBuild
+outputs/
+# C++ build outputs
+/obj/
+/libs/
+# NDK generated files
+/.cxx/
