@@ -29,29 +29,36 @@ class MainActivity : ComponentActivity() {
         setContent {
             WordtopdfTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     Greeting("Android")
 
                     val config = ViewerConfig.Builder()
                         .openUrlCachePath(this.cacheDir.absolutePath).build()
 
                     // from assets
-                    val uri = Uri.parse("file:///android_asset/Accessibility_Enabled.docx")
+                    val uri = Uri.parse("file:///android_asset/chinese-zh.doc")
 
                     // intent builder
-                    val intent: Intent = DocumentActivity.IntentBuilder.fromActivityClass(this, DocumentActivity::class.java)
+                    val intent: Intent = DocumentActivity.IntentBuilder.fromActivityClass(
+                        this,
+                        DocumentActivity::class.java
+                    )
                         .withUri(uri)
                         .usingConfig(config)
                         .usingTheme(R.style.Theme_WordToPdf)
                         .build()
                     startActivity(intent)
 
-                    val outputFilename = "Accessibility_Enabled.pdf"
-                    simpleDocxConvert("Accessibility_Enabled.docx", outputFilename)
+                    val outputFilename = "chinese-zh.pdf"
+                    simpleDocxConvert("chinese-zh.doc", outputFilename)
                 }
             }
         }
     }
+
     private fun simpleDocxConvert(inputFilename: String, outputFilename: String) {
         try {
             val pdfDoc = PDFDoc()
@@ -73,10 +80,7 @@ class MainActivity : ComponentActivity() {
             val outputFilePath = File(externalFilesDir, outputFilename).absolutePath
 
             pdfDoc.save(outputFilePath, SDFDoc.SaveMode.INCREMENTAL, null)
-            Log.d("simpleDocxConvert", "Done conversion: $outputFilePath")
-
-            // Delete the temporary file after conversion if needed
-            temporaryFile.delete()
+            Log.d("simpleDocConvert", "Done conversion: $outputFilePath")
         } catch (e: PDFNetException) {
             val errorMessage = StringBuilder()
             errorMessage.append("Error converting document:\n")
@@ -85,7 +89,7 @@ class MainActivity : ComponentActivity() {
             for (element in e.stackTrace) {
                 errorMessage.append(element.toString()).append("\n")
             }
-            Log.d("simpleDocxConvert", errorMessage.toString())
+            Log.d("simpleDocConvert", errorMessage.toString())
         }
     }
 }
@@ -93,8 +97,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-            text = "Hello $name!",
-            modifier = modifier
+        text = "Hello $name!",
+        modifier = modifier
     )
 }
 
